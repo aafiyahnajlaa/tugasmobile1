@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login.dart';
 import 'penjumlahan_pengurangan.dart';
 import 'ganjil_genap.dart';
+import 'data_kelompok.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController num1Controller = TextEditingController();
   final TextEditingController num2Controller = TextEditingController();
   final TextEditingController numberController = TextEditingController();
+  
 
   bool isLoggedIn = false;
   String welcomeMessage = '';
@@ -36,9 +38,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Aplikasi Bilangan')),
+      appBar: AppBar(title: Text('Kalkulator')),
       body: Container(
-        color: Color(0xFF101820),
+        color: Colors.grey[300],
         padding: const EdgeInsets.all(16.0),
         child: isLoggedIn ? buildMenuContent() : buildLoginForm(),
       ),
@@ -57,11 +59,24 @@ class _HomePageState extends State<HomePage> {
   Widget buildMenuContent() {
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(welcomeMessage, style: TextStyle(color: Colors.white, fontSize: 24)),
+          Text(welcomeMessage, style: TextStyle(color: Colors.blueGrey[900], fontSize: 24, fontWeight: FontWeight.bold)),
           SizedBox(height: 10),
-          Text('Menu Utama', style: TextStyle(color: Colors.white, fontSize: 24)),
-          SizedBox(height: 10),
+          Text('Menu Utama', style: TextStyle(color: Colors.blueGrey[900], fontSize: 24, fontWeight: FontWeight.bold)),
+          SizedBox(height: 40),
+          ElevatedButton(
+  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+    builder: (context) => DataKelompokPage(dataKelompok: dataKelompok),
+  )),
+  child: Text('Data Kelompok'),
+  style: ElevatedButton.styleFrom(
+    minimumSize: Size(double.infinity, 40),
+    backgroundColor: Colors.blueGrey[900],
+    foregroundColor: Colors.white,
+  ),
+),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => CalculatorPage(
@@ -72,11 +87,11 @@ class _HomePageState extends State<HomePage> {
             child: Text('Penjumlahan dan Pengurangan'),
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 40),
-              backgroundColor: Colors.blueGrey[300],
+              backgroundColor: Colors.blueGrey[900],
               foregroundColor: Colors.white,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           ElevatedButton(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => OddEvenPage(
@@ -86,7 +101,7 @@ class _HomePageState extends State<HomePage> {
             child: Text('Bilangan Ganjil/Genap'),
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 40),
-              backgroundColor: Colors.blueGrey[300],
+              backgroundColor: Colors.blueGrey[900],
               foregroundColor: Colors.white,
             ),
           ),
@@ -96,7 +111,10 @@ class _HomePageState extends State<HomePage> {
               setState(() {
                 isLoggedIn = false; // Log out
                 welcomeMessage = ''; // Reset welcome message
-                num1Controller.clear(); // Clear input fields
+                // Clear input fields
+                usernameController.clear();
+                passwordController.clear();
+                num1Controller.clear();
                 num2Controller.clear();
                 numberController.clear();
               });
@@ -104,10 +122,11 @@ class _HomePageState extends State<HomePage> {
             child: Text('Log Out'),
             style: ElevatedButton.styleFrom(
               minimumSize: Size(double.infinity, 40),
-              backgroundColor: Colors.blueGrey,
+              backgroundColor: Colors.blueGrey[300],
               foregroundColor: Colors.white,
             ),
           ),
+          SizedBox(height: 400),
         ],
       ),
     );
