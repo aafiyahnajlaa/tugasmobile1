@@ -20,18 +20,13 @@ class LoginPage extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(height: 20),
-            Image.asset(
-              'images/kalkulator.png', // Ganti dengan path gambar Anda
-              width: 100,
-              height: 100,
-            ),
-          
-          SizedBox(height: 10),
-           Column(
-           crossAxisAlignment: CrossAxisAlignment.start,
+          Image.asset(
+            'images/kalkulator.png', // Ganti dengan path gambar Anda
+            width: 100,
+            height: 100,
           ),
+          SizedBox(height: 10),
           SizedBox(height: 20), // Gap setelah tabel
-          // Tampilkan form login
           Card(
             elevation: 8,
             shape: RoundedRectangleBorder(
@@ -73,11 +68,22 @@ class LoginPage extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: () => login(),
+                    onPressed: () {
+                      // Logika untuk memeriksa username dan password
+                      if (usernameController.text == 'admin' && passwordController.text == '1234') {
+                        // Akses berhasil, panggil fungsi login
+                        login();
+                      } else {
+                        // Tampilkan pesan kesalahan
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Username atau password salah')),
+                        );
+                      }
+                    },
                     child: Text('Login'),
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(double.infinity, 40),
-                      backgroundColor: Colors.blueGrey[900], // bluegrey
+                      backgroundColor: Colors.blueGrey[900],
                       foregroundColor: Colors.white,
                     ),
                   ),
